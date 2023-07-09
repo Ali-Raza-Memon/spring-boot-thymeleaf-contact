@@ -6,20 +6,19 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="user")
+@Table(name="contact")
 @Setter
 @Getter
-public class User {
+public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer cId;
     private String name;
-    @Column(unique = true)
+    private String secondName;
+    private String work;
     private String email;
-    private String password;
-    private String role;
-    private boolean enabled;
-    private String imageUrl;
-    @Column(length = 500)
-    private String about;
+    private String phone;
+    private String image;
+    private String description;
+
 }
