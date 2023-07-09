@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import com.thymeleaf.contactmanagement.entities.Contact;
 
 @Entity
 @Table(name ="user")
@@ -22,4 +25,12 @@ public class User {
     private String imageUrl;
     @Column(length = 500)
     private String about;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Contact> contacts = new ArrayList<>();
+
+
+    public User(){
+        super();
+    }
 }
