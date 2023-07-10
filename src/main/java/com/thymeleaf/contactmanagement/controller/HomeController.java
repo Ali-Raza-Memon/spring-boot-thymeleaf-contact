@@ -3,6 +3,7 @@ import com.thymeleaf.contactmanagement.dao.UserRepository;
 import com.thymeleaf.contactmanagement.entities.User;
 import com.thymeleaf.contactmanagement.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,8 @@ import javax.validation.Valid;
 @Controller
 public class HomeController {
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
 
@@ -61,6 +64,7 @@ public class HomeController {
             user.setRole("ROLE_USER");
             user.setEnabled(true);
             user.setImageUrl("default.png");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
 
             System.out.println("Agreement :"+agreement);
             System.out.println("USER :"+user);
