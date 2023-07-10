@@ -49,6 +49,7 @@ public class MyConfig extends WebSecurityConfigurerAdapter {
                .antMatchers("/signin").permitAll()
                .and()
                .formLogin()
+               .loginPage("/signin")
                .and()
                .csrf().disable();
     }
