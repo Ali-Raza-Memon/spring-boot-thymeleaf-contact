@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import com.thymeleaf.contactmanagement.entities.Contact;
@@ -18,6 +20,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @NotBlank(message = "Name field must not be empty")
+    @Size(min = 2, max= 20, message = "min 2 and max 20 characters are allowed!")
     private String name;
     @Column(unique = true)
     private String email;
