@@ -87,7 +87,6 @@ public class HomeController {
 
     }
 
-
     @GetMapping("/signin")
     public String login(Model model){
         model.addAttribute("title", "Login -Smart Contact Management");
