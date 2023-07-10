@@ -10,7 +10,103 @@
 
   <section>
 
-    <h1>This is Signup page</h1>
+    <div class="container">
+
+<!--        Each row has 12 grids-->
+        <div class="row">
+
+            <div class="col-md-6 offset-md-3">
+
+                <div class="my-card mt-1 ">
+
+                    <div class="container text-center">
+                        <img style="width: 80px" src="" th:src="@{/img/membership.png}" alt="" />
+
+                    </div>
+
+                    <h1 class="text-center">Register Here</h1>
+
+                    <form action="" th:action="@{/do_register}" method="post">
+
+<!--                            Name Field-->
+                        <div class="form-group">
+
+                            <label for="name_field">Your Name</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name_field"
+                                    placeholder="Enter here"
+                                   aria-describedby="emailHelp"
+                                    required
+                            />
+
+                        </div>
+
+<!--                        Email Field-->
+                        <div class="form-group">
+
+                            <label for="email_field">Your Email</label>
+                            <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email_field"
+                                    placeholder="Enter here"
+                                    aria-describedby="emailHelp"
+                                    required
+                            />
+
+                        </div>
+
+
+<!--                            Password Field-->
+                        <div class="form-group">
+
+                            <label for="password_field">Your Password</label>
+                            <input
+                                    type="password"
+                                    class="form-control"
+                                    id="password_field"
+                                    placeholder="Enter here"
+                                    aria-describedby="emailHelp"
+                                    required
+                            />
+                        </div>
+
+
+
+<!--                        user about field-->
+
+                        <div class="form-group">
+
+                            <textarea  placeholder="Enter someting yourself" rows="5" class="form-control"></textarea>
+                            
+                        </div>
+
+
+                        <div class="container text-center">
+
+                            <button type="submit" class="btn bg-primary btn-block text-white">
+                                Submit
+                            </button>
+
+                            <button type="reset" class="btn btn-warning btn-block ">
+                                Reset
+                            </button>
+
+
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
 
   </section>
 
