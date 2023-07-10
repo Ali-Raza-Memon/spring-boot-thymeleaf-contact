@@ -7,11 +7,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import com.thymeleaf.contactmanagement.entities.Contact;
+import lombok.ToString;
 
 @Entity
 @Table(name ="user")
 @Setter
 @Getter
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
