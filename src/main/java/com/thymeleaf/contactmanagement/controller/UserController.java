@@ -1,5 +1,6 @@
 package com.thymeleaf.contactmanagement.controller;
 
+import com.thymeleaf.contactmanagement.dao.ContactRepository;
 import com.thymeleaf.contactmanagement.dao.UserRepository;
 import com.thymeleaf.contactmanagement.entities.Contact;
 import com.thymeleaf.contactmanagement.entities.User;
@@ -18,12 +19,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ContactRepository contactRepository;
 
     //method for adding common data to response
     @ModelAttribute
@@ -103,6 +107,27 @@ public class UserController {
         return "normal/add_contact_form";
 
     }
+
+    //show contacts handler
+    @GetMapping("/show_contacts")
+    public String showContacts(Model model,Principal principal){
+
+        model.addAttribute("title","Show User Contacts");
+
+        //contact ki list ko send karna hai
+
+//        String userName = principal.getName();
+//        User user = this.userRepository.getUserByUserName(userName);
+//        List<Contact> contacts =   user.getContacts();
+        String userName = principal.getName();
+        User user = this.userRepository.getUserByUserName(userName);
+        List<Contact> contacts = this.contactRepository.findContactsByUser(user.getId());
+
+        model.addAttribute("contacts",contacts);
+
+        return "normal/show_contacts";
+    }
+
 
 
 }
