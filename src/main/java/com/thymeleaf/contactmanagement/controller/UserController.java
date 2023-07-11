@@ -3,6 +3,7 @@ package com.thymeleaf.contactmanagement.controller;
 import com.thymeleaf.contactmanagement.dao.UserRepository;
 import com.thymeleaf.contactmanagement.entities.Contact;
 import com.thymeleaf.contactmanagement.entities.User;
+import com.thymeleaf.contactmanagement.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -57,7 +59,7 @@ public class UserController {
     @PostMapping("/process-contact")
     public String processContact(@ModelAttribute Contact contact,
                                  @RequestParam("profileImage")MultipartFile file
-                                 , Principal principal){
+                                 , Principal principal,HttpSession session){
 
         try{
             String name = principal.getName();
@@ -88,9 +90,14 @@ public class UserController {
             System.out.println("Data "+contact);
             System.out.println("Added to data base");
 
+            //message success
+            session.setAttribute("message",new Message("Your content is added ! add more", "success"));
+
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("Error "+e.getMessage());
+            //message error
+            session.setAttribute("message", new Message("Something went wrong. Try again","danger"));
         }
 
         return "normal/add_contact_form";
