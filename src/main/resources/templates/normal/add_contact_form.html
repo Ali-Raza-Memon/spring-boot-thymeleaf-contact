@@ -48,6 +48,7 @@
                                    name="name"
                                    placeholder="Enter name here"
                                    class="form-control"
+                                    required
                             />
 
 
@@ -72,6 +73,7 @@
                                     name="secondName"
                                     placeholder="Enter Nick Name here"
                                     class="form-control"
+                                    required
                             />
                         </div>
 
@@ -94,6 +96,9 @@
                                     name="phone"
                                     placeholder="Enter contact number here"
                                     class="form-control"
+                                    required
+                                    min="3"
+                                    max="11"
                             />
                         </div>
 
@@ -119,6 +124,7 @@
                                     name="email"
                                     placeholder="Enter email here"
                                     class="form-control"
+                                    required
                             />
                         </div>
 
@@ -142,6 +148,7 @@
                                     name="work"
                                     placeholder="Enter work here"
                                     class="form-control"
+                                    required
                             />
                         </div>
 
@@ -149,7 +156,7 @@
 
                             <div class="form-group mt-3">
 
-                                <textarea placeholder="Enter  contact description" name="description" id="description" class="form-control" rows="10"></textarea>
+                                <textarea id="mytextarea" placeholder="Enter  contact description" name="description"  class="form-control" rows="10"></textarea>
                                 
                             </div>
                         
@@ -179,6 +186,15 @@
 
     </div>
     </div>
+
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
 
 
 
