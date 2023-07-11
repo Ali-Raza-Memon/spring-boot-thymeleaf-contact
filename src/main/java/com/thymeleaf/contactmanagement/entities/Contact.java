@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Table(name="contact")
 @Setter
 @Getter
-@ToString
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
