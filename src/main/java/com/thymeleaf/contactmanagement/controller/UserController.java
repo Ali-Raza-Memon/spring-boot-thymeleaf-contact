@@ -74,8 +74,10 @@ public class UserController {
 
             //processing and uploading file...
 
-            if(file.isEmpty())
+            if(file.isEmpty()) {
                 System.out.println("File is empty");
+                contact.setImage("contact.png");
+            }
             else{
                 //uploading file to folder and update the name to contact
                 contact.setImage(file.getOriginalFilename());
@@ -136,6 +138,17 @@ public class UserController {
         model.addAttribute("totalPages",contacts.getTotalPages());
 
         return "normal/show_contacts";
+    }
+
+    //showing particular contact details.
+
+    @GetMapping("/{cId}/contact")
+    public String showContactDetail(@PathVariable("cId") Integer cId, Model model){
+
+        System.out.println("CID"+cId);
+        Contact contact = this.contactRepository.findById(cId).get();
+        model.addAttribute("contact",contact);
+        return "normal/contact_detail";
     }
 
 
