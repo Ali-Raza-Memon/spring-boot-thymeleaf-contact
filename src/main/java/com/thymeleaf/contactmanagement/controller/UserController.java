@@ -186,6 +186,63 @@ public class UserController {
        return "redirect:/user/show_contacts/0";
     }
 
+    //open update form handler
+    @PostMapping("/update-contact/{cid}")
+    public String updateForm(@PathVariable("cid") Integer cid, Model model){
+
+        model.addAttribute("title","Update Contact");
+
+        Contact contact = this.contactRepository.findById(cid).get();
+        model.addAttribute("contact",contact);
+        return "normal/update_form";
+    }
+
+    //update contact handler
+    @PostMapping("/process-update")
+    public String updateHandler(@ModelAttribute Contact contact,@RequestParam("profileImage") MultipartFile file,
+                                Model model, HttpSession session,Principal principal){
+
+        try{
+
+            Contact oldContactDetail =this.contactRepository.findById(contact.getCId()).get();
+
+            if(!file.isEmpty()){
+                //file work...
+                //rewrite
+
+                //delete old photo
+                File deleteFile = new ClassPathResource("static/img").getFile();
+                File file1 = new File(deleteFile,oldContactDetail.getImage());
+                file1.delete();
+
+
+
+                //update new photo
+                File saveFile = new ClassPathResource("static/img").getFile();
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                Files.copy(file.getInputStream(),path , StandardCopyOption.REPLACE_EXISTING);
+                contact.setImage(file.getOriginalFilename());
+
+
+            }else{
+                //set old pic
+                contact.setImage(oldContactDetail.getImage());
+            }
+
+            User user = this.userRepository.getUserByUserName(principal.getName());
+            contact.setUser(user);
+            this.contactRepository.save(contact);
+            session.setAttribute("message",new Message("Your contact is updated...","success"));
+        }catch(Exception ex){
+
+        }
+
+
+
+        System.out.println("Contact Name :"+contact.getName());
+        System.out.println("Contact Id :"  +contact.getCId());
+        return "redirect:/user/"+contact.getCId()+"/contact";
+    }
 
 
 
