@@ -13,7 +13,7 @@
 
     <div class="card mr-3 ml-3">
 
-        <div class="card-body">
+        <div class="card-body" th:if="${contact}" >
 
             <div class="container text-center">
 
@@ -72,8 +72,10 @@
         </div>
 
 
+
     </div>
 
+    <h1 th:unless="${contact}" class="p-3 text-center bg-danger text-white">You do not have permissions for this!</h1>
 
 
 </section>

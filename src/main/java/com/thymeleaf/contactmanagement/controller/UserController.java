@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.awt.print.Printable;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -143,11 +144,17 @@ public class UserController {
     //showing particular contact details.
 
     @GetMapping("/{cId}/contact")
-    public String showContactDetail(@PathVariable("cId") Integer cId, Model model){
+    public String showContactDetail(@PathVariable("cId") Integer cId, Model model, Principal principal){
 
         System.out.println("CID"+cId);
+
+        String name = principal.getName();
+        User user = this.userRepository.getUserByUserName(name);
         Contact contact = this.contactRepository.findById(cId).get();
-        model.addAttribute("contact",contact);
+
+        if(user.getId()==contact.getUser().getId())
+            model.addAttribute("contact",contact);
+
         return "normal/contact_detail";
     }
 
