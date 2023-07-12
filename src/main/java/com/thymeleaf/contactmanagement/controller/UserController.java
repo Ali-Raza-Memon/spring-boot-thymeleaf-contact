@@ -7,6 +7,9 @@ import com.thymeleaf.contactmanagement.entities.User;
 import com.thymeleaf.contactmanagement.helper.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -109,8 +112,10 @@ public class UserController {
     }
 
     //show contacts handler
-    @GetMapping("/show_contacts")
-    public String showContacts(Model model,Principal principal){
+    //example (per page =5)
+    //current page =0 [page]
+    @GetMapping("/show_contacts/{page}")
+    public String showContacts(@PathVariable("page") Integer page,Model model,Principal principal){
 
         model.addAttribute("title","Show User Contacts");
 
@@ -121,9 +126,14 @@ public class UserController {
 //        List<Contact> contacts =   user.getContacts();
         String userName = principal.getName();
         User user = this.userRepository.getUserByUserName(userName);
-        List<Contact> contacts = this.contactRepository.findContactsByUser(user.getId());
+
+        Pageable pageable = PageRequest.of(page,5);
+
+        Page<Contact> contacts = this.contactRepository.findContactsByUser(user.getId(),pageable);
 
         model.addAttribute("contacts",contacts);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("totalPages",contacts.getTotalPages());
 
         return "normal/show_contacts";
     }
