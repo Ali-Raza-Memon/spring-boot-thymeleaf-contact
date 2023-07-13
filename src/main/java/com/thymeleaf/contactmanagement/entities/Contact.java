@@ -1,5 +1,6 @@
 package com.thymeleaf.contactmanagement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ public class Contact {
     @Column(length = 5000)
     private String description;
     @ManyToOne
+    @JsonIgnore
     private User user;
 
 
