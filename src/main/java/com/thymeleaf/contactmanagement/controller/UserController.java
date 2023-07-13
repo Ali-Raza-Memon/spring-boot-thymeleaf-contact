@@ -300,7 +300,6 @@ public class UserController {
             //error
             session.setAttribute("message", new Message("Please correct old password","danger"));
             return "redirect:/user/settings";
-
         }
 
         return "redirect:/user/index";
