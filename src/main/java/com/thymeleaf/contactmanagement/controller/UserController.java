@@ -10,6 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -269,6 +274,37 @@ public class UserController {
         return "normal/settings";
     }
 
+
+    //change password handler...
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("oldPassword")String oldPassword,
+                                 @RequestParam("newPassword")String newPassword,
+                                 Principal principal,
+                                 HttpSession session ){
+
+        System.out.println("OLD PASSWORD"+oldPassword);
+        System.out.println("NEW PASSWORD"+newPassword);
+
+        String userName = principal.getName();
+        User currentUser = this.userRepository.getUserByUserName(userName);
+        System.out.println(currentUser.getPassword());
+
+        if(this.bCryptPasswordEncoder.matches(oldPassword, currentUser.getPassword())){
+            //change the password
+
+            currentUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            this.userRepository.save(currentUser);
+            session.setAttribute("message", new Message("Your password is successfully changed","success"));
+
+        }else{
+            //error
+            session.setAttribute("message", new Message("Please correct old password","danger"));
+            return "redirect:/user/settings";
+
+        }
+
+        return "redirect:/user/index";
+    }
 
 
 }
